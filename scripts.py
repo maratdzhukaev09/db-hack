@@ -4,7 +4,6 @@ from datacenter.models import Chastisement
 from datacenter.models import Lesson
 from datacenter.models import Subject
 from datacenter.models import Commendation
-from random import choice
 
 
 class ObjectNotFoundError(BaseException):
