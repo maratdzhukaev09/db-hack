@@ -9,7 +9,7 @@
 ## Запуск python shell
 
 Запустите python shell командой:
-```commandline
+```bash
 python manage.py shell
 ```
 Используйте python3, если есть конфликт с Python2.
@@ -24,7 +24,7 @@ python manage.py shell
 
 ### scripts.get_schoolkid()
 
-```pydocstring
+```python
 >>> import scripts
 >>> scripts.get_schoolkid("Иванов Иван Иванович")
 # <Schoolkid: Иванов Иван Иванович 1А>
@@ -33,7 +33,7 @@ python manage.py shell
 
 ### scripts.fix_marks()
 
-```pydocstring
+```python
 >>> import scripts
 >>> scripts.fix_marks("Иванов Иван Иванович")
 ```
@@ -41,7 +41,7 @@ python manage.py shell
 
 ### scripts.remove_chastisements()
 
-```pydocstring
+```python
 >>> import scripts
 >>> scripts.remove_chastisements("Иванов Иван Иванович")
 ```
@@ -49,13 +49,13 @@ python manage.py shell
 
 ### scripts.create_commendation()
 
-```pydocstring
+```python
 >>> import scripts
 >>> scripts.create_commendation("Иванов Иван Иванович", "Математика")
 ```
 Создаёт "похвалу" по математике Иванову Ивану Ивановичу, со словами "Хвалю!".
 
-```pydocstring
+```python
 >>> import scripts
 >>> scripts.create_commendation("Иванов Иван Иванович", "Математика", "Молодец!")
 ```
