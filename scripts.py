@@ -32,13 +32,13 @@ class SubjectNotFoundError(BaseException):
 
 
 def get_schoolkid(schoolkid_name):
-    schoolkids = Schoolkid.objects.filter(full_name__contains=schoolkid_name)
-    if schoolkids.count() == 0:
-        raise SchoolkidNotFoundError(schoolkid_name)
-    elif schoolkids.count() > 1:
-        raise SchoolkidTooMuchResultsError(schoolkid_name)
-    else:
-        return schoolkids[0]
+    try:
+        schoolkid = Schoolkid.objects.get(full_name__contains=schoolkid_name)
+        return schoolkid
+    except Schoolkid.DoesNotExist:
+        raise ObjectNotFoundError(schoolkid_name)
+    except Schoolkid.MultipleObjectsReturned:
+        raise ObjectTooMuchResultsError(schoolkid_name)
 
 
 def fix_marks(schoolkid_name):
