@@ -59,8 +59,7 @@ def create_commendation(schoolkid_name, subject_name, commendation_text="Хва�
         year_of_study=schoolkid.year_of_study,
         group_letter=schoolkid.group_letter,
         subject=subject
-    )
-    lesson = choice(lessons)
+    ).order_by("?").first()
     commendation = Commendation.objects.create(
         text=commendation_text,
         created=lesson.date,
