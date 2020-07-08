@@ -7,28 +7,20 @@ from datacenter.models import Commendation
 from random import choice
 
 
-class SchoolkidNotFoundError(BaseException):
-    def __init__(self, schoolkid_name):
-        self.schoolkid_name = schoolkid_name
+class ObjectNotFoundError(BaseException):
+    def __init__(self, name):
+        self.name = name
 
     def __str__(self):
-        return f"'{self.schoolkid_name}' is not found, check the spelling"
+        return f"'{self.name}' is not found, check the spelling"
 
 
-class SchoolkidTooMuchResultsError(BaseException):
-    def __init__(self, schoolkid_name):
-        self.schoolkid_name = schoolkid_name
-
-    def __str__(self):
-        return f"Too much results for '{self.schoolkid_name}, expected 1'"
-
-
-class SubjectNotFoundError(BaseException):
-    def __init__(self, subject_name):
-        self.subject_name = subject_name
+class ObjectTooMuchResultsError(BaseException):
+    def __init__(self, name):
+        self.name = name
 
     def __str__(self):
-        return f"'{self.subject_name}' is not found, check the spelling"
+        return f"Too much results for '{self.name}', expected 1"
 
 
 def get_schoolkid(schoolkid_name):
@@ -58,10 +50,12 @@ def remove_chastisements(schoolkid_name):
 def create_commendation(schoolkid_name, subject_name, commendation_text="Хвалю!"):
     schoolkid = get_schoolkid(schoolkid_name)
     try:
-        subject = Subject.objects.get(title=subject_name, year_of_study=schoolkid.year_of_study)
+        subject = Subject.objects.get(title__contains=subject_name, year_of_study=schoolkid.year_of_study)
     except Subject.DoesNotExist:
-        raise SubjectNotFoundError(subject_name)
-    lessons = Lesson.objects.filter(
+        raise ObjectNotFoundError(subject_name)
+    except Subject.MultipleObjectsReturned:
+        raise ObjectTooMuchResultsError(subject_name)
+    lesson = Lesson.objects.filter(
         year_of_study=schoolkid.year_of_study,
         group_letter=schoolkid.group_letter,
         subject=subject
